@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Day3_CSharp_Task
+namespace Day3_CSharp_Task_NoInheritance
 {
     public class Program
     {
@@ -9,13 +9,10 @@ namespace Day3_CSharp_Task
         {
             public int Sum(int a, int b) => a + b;
             public double Sum(double a, double b) => a + b;
-
             public int Sub(int a, int b) => a - b;
             public double Sub(double a, double b) => a - b;
-
             public int Mul(int a, int b) => a * b;
             public double Mul(double a, double b) => a * b;
-
             public int Div(int a, int b)
             {
                 if (b == 0) return 0;
@@ -35,17 +32,14 @@ namespace Day3_CSharp_Task
             public string Header { get; set; }
             public string Body { get; set; }
             public int Mark { get; set; }
-
             public Question() { }
-
             public Question(string header, string body, int mark)
             {
                 Header = header;
                 Body = body;
                 Mark = mark;
             }
-
-            public virtual void Show()
+            public void Show()
             {
                 Console.WriteLine($"\n[ {Header} ]");
                 Console.WriteLine(Body);
@@ -54,23 +48,30 @@ namespace Day3_CSharp_Task
         }
 
         // ------------------ MCQ ------------------
-        class MCQ : Question
+        class MCQ
         {
+            public string Header { get; set; }
+            public string Body { get; set; }
+            public int Mark { get; set; }
             public string[] Choices { get; set; }
-            public int CorrectIndex { get; set; } 
+            public int CorrectIndex { get; set; } //I added it to calculate the result
 
             public MCQ() { }
 
             public MCQ(string header, string body, int mark, string[] choices, int correctIndex)
-                : base(header, body, mark)
             {
+                Header = header;
+                Body = body;
+                Mark = mark;
                 Choices = choices;
                 CorrectIndex = correctIndex;
             }
 
-            public override void Show()
+            public void Show()
             {
-                base.Show();
+                Console.WriteLine($"\n[ {Header} ]");
+                Console.WriteLine(Body);
+                Console.WriteLine($"Mark: {Mark}");
                 Console.WriteLine("Choices:");
                 for (int i = 0; i < Choices.Length; i++)
                 {
@@ -87,12 +88,12 @@ namespace Day3_CSharp_Task
             Console.WriteLine("Mul: " + c.Mul(3.5, 2.0));
             Console.WriteLine("---------------------");
 
-            Question q = new MCQ("Math Q", "What is 2+2?", 5, new string[] { "2", "3", "4", "5" }, 2);
-            q.Show();
+            MCQ mcq = new MCQ("Math Q", "What is 2+2?", 5, new string[] { "2", "3", "4", "5" }, 2);
+            mcq.Show();
 
             Console.Write("Enter your choice (1-4): ");
             int ans = int.Parse(Console.ReadLine());
-            if (ans - 1 == ((MCQ)q).CorrectIndex)
+            if (ans - 1 == mcq.CorrectIndex)
                 Console.WriteLine("Correct!");
             else
                 Console.WriteLine("Wrong!");
