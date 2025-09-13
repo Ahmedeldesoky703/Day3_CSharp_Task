@@ -66,7 +66,6 @@ namespace Day3_CSharp_Task_NoInheritance
                 Choices = choices;
                 CorrectIndex = correctIndex;
             }
-
             public void Show()
             {
                 Console.WriteLine($"\n[ {Header} ]");
